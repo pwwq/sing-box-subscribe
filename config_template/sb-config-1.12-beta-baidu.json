@@ -1,0 +1,682 @@
+{
+  "log": {
+    "disabled": true,
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "type": "https",
+        "tag": "google",
+        "detour": "国外",
+        "server": "8.8.8.8",
+        "server_port": 0
+      },
+      {
+        "type": "https",
+        "tag": "ali",
+        "detour": "direct",
+        "server": "223.5.5.5",
+        "server_port": 0
+      },
+      {
+        "type": "fakeip",
+        "tag": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      },
+      {
+        "type": "predefined",
+        "tag": "block",
+        "responses": [
+          {
+            "rcode": "REFUSED"
+          }
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "clash_mode": "Direct",
+        "server": "ali"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "fakeip"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip",
+        "rewrite_ttl": 1
+      },
+      {
+        "rule_set": "cn_domain",
+        "server": "ali"
+      }
+    ],
+    "final": "google",
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "address": [
+        "172.19.0.0/30",
+        "fdfe:dcba:9876::/126"
+      ],
+      "auto_route": true,
+      "stack": "mixed",
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      }
+    },
+    {
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7890
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "国内",
+      "outbounds": [
+        "direct",
+        "昆山联通",
+        "郑州联通1",
+        "郑州联通2",
+        "苏州联通",
+        "南京联通",
+        "百度公共域名",
+        "广州联通1",
+        "广州联通2",
+        "广州电信",
+        "重庆移动",
+        "广州移动",
+        "南京移动",
+        "南京电信1",
+        "南京电信2",
+        "北京电信1",
+        "北京电信2",
+        "北京电信3",
+        "郑州电信",
+        "{all}"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "国外",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "GLOBAL",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Google",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Apple",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Telegram",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "BiliBili",
+      "outbounds": [
+        "direct",
+        "昆山联通",
+        "郑州联通1",
+        "郑州联通2",
+        "苏州联通",
+        "南京联通",
+        "百度公共域名",
+        "广州联通1",
+        "广州联通2",
+        "广州电信",
+        "重庆移动",
+        "广州移动",
+        "南京移动",
+        "南京电信1",
+        "南京电信2",
+        "北京电信1",
+        "北京电信2",
+        "北京电信3",
+        "郑州电信",
+        "{all}",
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "Netflix",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "GitHub",
+      "outbounds": [
+        "auto",
+        "{all}",
+        "direct"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "YouTube",
+      "outbounds": [
+        "auto",
+        "{all}"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "OpenAI",
+      "outbounds": [
+        "auto",
+        "{all}"
+      ]
+    },
+    {
+      "tag":"auto",
+      "type":"urltest",
+      "outbounds":[
+        "{all}"
+      ],
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": "10m",
+      "tolerance": 50
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "http",
+      "tag": "昆山联通",
+      "server": "157.0.146.158",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "郑州联通1",
+      "server": "110.242.70.68",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "郑州联通2",
+      "server": "110.242.70.69",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "苏州联通",
+      "server": "157.0.148.53",
+      "server_port": 443,
+      "headers": {
+        "Host": "dtliving-sz.dingtalk.com:80",
+        "With-At": "dtliving-sz.dingtalk.com",
+        "X-T5-Auth": "1875830060"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "南京联通",
+      "server": "153.3.237.117",
+      "server_port": 443,
+      "headers": {
+        "Host": "dtliving-sz.dingtalk.com:80",
+        "With-At": "dtliving-sz.dingtalk.com",
+        "X-T5-Auth": "1875830060"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "百度公共域名",
+      "server": "cloudnproxy.n.shifen.com",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "广州联通1",
+      "server": "163.177.17.189",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "广州联通2",
+      "server": "163.177.17.6",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "广州电信",
+      "server": "14.215.182.75",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "重庆移动",
+      "server": "36.152.45.97",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "广州移动",
+      "server": "183.240.98.84",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "南京移动",
+      "server": "36.155.169.188",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "南京电信1",
+      "server": "180.101.50.249",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "南京电信2",
+      "server": "180.101.50.208",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "北京电信3",
+      "server": "220.181.33.174",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "北京电信1",
+      "server": "220.181.7.1",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "北京电信2",
+      "server": "220.181.111.189",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    },
+    {
+      "type": "http",
+      "tag": "郑州电信",
+      "server": "180.97.93.202",
+      "server_port": 443,
+      "headers": {
+        "Host": "153.3.236.22:443",
+        "X-T5-Auth": "683556433"
+      }
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "quic",
+          "dns"
+        ],
+        "timeout": "500ms"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 53
+          },
+          {
+            "protocol": "dns"
+          }
+        ],
+        "action": "hijack-dns"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "Global",
+        "outbound": "GLOBAL"
+      },
+      {
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "bilibili_domain",
+        "outbound": "BiliBili"
+      },
+      {
+        "rule_set": [
+          "netflix_ip",
+          "netflix_domain"
+        ],
+        "outbound": "Netflix"
+      },
+      {
+        "rule_set": "github_domain",
+        "outbound": "GitHub"
+      },
+      {
+        "rule_set": "youtube_domain",
+        "outbound": "YouTube"
+      },
+      {
+        "rule_set": "openai_domain",
+        "outbound": "OpenAI"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "proxy_domain"
+          },
+          {
+            "rule_set": [
+              "cn_domain",
+              "apple_domain",
+              "google_domain",
+              "telegram_domain",
+              "netflix_domain"
+            ],
+            "invert": true
+          }
+        ],
+        "outbound": "国外"
+      },
+      {
+        "action": "resolve"
+      },
+      {
+        "rule_set": [
+          "telegram_ip",
+          "telegram_domain"
+        ],
+        "outbound": "Telegram"
+      },
+      {
+        "rule_set": [
+          "google_ip",
+          "google_domain"
+        ],
+        "outbound": "Google"
+      },
+      {
+        "rule_set": [
+          "apple_ip",
+          "apple_domain"
+        ],
+        "outbound": "Apple"
+      },
+      {
+        "rule_set": [
+          "cn_ip",
+          "cn_domain"
+        ],
+        "outbound": "国内"
+      },
+      {
+        "rule_set": "ads",
+        "action": "reject",
+        "method": "drop"
+      },
+      {
+        "domain_keyword": [
+          "av",
+          "porn"
+        ],
+        "outbound": "GLOBAL"
+      },
+      {
+        "package_name": [
+          "com.UOJjwyhtp4iM0AeP.C1wqVnPr90K5yhGz",
+          "sjcadxr.vedblodehvpkp.ahpzqhbiktqww"
+        ],
+        "outbound": "国外"
+      },
+      {
+        "domain": [
+          "ipv6.icanhazip.com",
+          "ipv4.icanhazip.com"
+        ],
+        "outbound": "direct"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "apple_ip",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "apple_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "github_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/bahamut.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "bilibili_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/bilibili.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "cn_ip",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/cn.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "cn_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/cn.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "google_ip",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/google.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "google_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/google.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "netflix_ip",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/netflix.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "netflix_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/netflix.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "openai_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/openai.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "proxy_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "telegram_ip",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/telegram.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "telegram_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/telegram.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "youtube_domain",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/youtube.srs",
+        "download_detour": "国外"
+      },
+      {
+        "type": "remote",
+        "tag": "ads",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/Yuu518/sing-box-rules/rule_set/rule_set_site/category-ads-all.srs",
+        "download_detour": "国外"
+      }
+    ],
+    "auto_detect_interface": true,
+    "default_domain_resolver": "google"
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db"
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "ui",
+      "default_mode": "Rule"
+    }
+  }
+}
